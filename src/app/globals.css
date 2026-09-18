@@ -94,3 +94,12 @@ textarea {
   scrollbar-width: thin;
   scrollbar-color: #C45D3E #E8E0D4;
 }
+
+/* Hide scrollbar while preserving scrollability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

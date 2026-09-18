@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -13,30 +13,10 @@ import {
   Package,
   Building2,
   RotateCcw,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 
 export default function ProductShowcase() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 390;
-      scrollContainerRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleCategorySelect = (catId: string) => {
-    setSelectedCategory(catId);
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollTo({ left: 0, behavior: "smooth" });
-    }
-  };
 
   const products = useMemo(
     () => [
@@ -192,121 +172,107 @@ export default function ProductShowcase() {
             of reclaimed urban advertising banners.
           </motion.p>
 
-          {/* High-Performance Category Filter Navigation */}
+          {/* Category Filter Navigation - Guaranteed ONE Single Line with Smooth Layout Animation */}
           <div className="mt-8 flex flex-col items-center gap-3 w-full">
-            <div
-              role="tablist"
-              aria-label="Filter products by category"
-              className="w-fit max-w-full p-1.5 rounded-2xl sm:rounded-full bg-[#E8E0D4]/70 border border-[#D6CCBF]/70 backdrop-blur-xs flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 shadow-xs"
-            >
-              {categories.map((cat) => {
-                const Icon = cat.icon;
-                const isSelected = selectedCategory === cat.id;
-                const count = categoryCounts[cat.id] || 0;
+            <div className="max-w-full overflow-x-auto py-1 px-2 no-scrollbar">
+              <div
+                role="tablist"
+                aria-label="Filter products by category"
+                className="w-max p-1.5 rounded-full bg-[#E8E0D4]/70 border border-[#D6CCBF]/70 backdrop-blur-xs flex items-center gap-1.5 sm:gap-2 shadow-xs flex-nowrap whitespace-nowrap"
+              >
+                {categories.map((cat) => {
+                  const Icon = cat.icon;
+                  const isSelected = selectedCategory === cat.id;
+                  const count = categoryCounts[cat.id] || 0;
 
-                return (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isSelected}
-                    onClick={() => handleCategorySelect(cat.id)}
-                    className={`relative px-3.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold transition-all duration-150 active:scale-95 cursor-pointer select-none flex items-center gap-2 whitespace-nowrap group ${
-                      isSelected
-                        ? "bg-[#203a2e] text-white shadow-sm"
-                        : "bg-white/80 text-[#554E45] hover:bg-white hover:text-[#211E1B] border border-transparent hover:border-[#D6CCBF]"
-                    }`}
-                  >
-                    <Icon
-                      size={15}
-                      className={
+                  return (
+                    <motion.button
+                      key={cat.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isSelected}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.96 }}
+                      className={`relative px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none flex items-center gap-2 whitespace-nowrap group shrink-0 ${
                         isSelected
-                          ? "text-[#E07A5F]"
-                          : "text-[#6E675E] group-hover:text-[#C45D3E] transition-colors"
-                      }
-                    />
-                    <span>{cat.label}</span>
-                    <span
-                      className={`text-[10px] sm:text-[11px] font-mono font-bold px-1.5 py-0.5 rounded-md transition-colors ${
-                        isSelected
-                          ? "bg-[#335443] text-white"
-                          : "bg-[#F3EDE4] text-[#6E675E] group-hover:bg-[#E8E0D4]"
+                          ? "text-white"
+                          : "bg-white/80 text-[#554E45] hover:bg-white hover:text-[#211E1B] border border-transparent hover:border-[#D6CCBF]"
                       }`}
                     >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
+                      {/* Smooth Gliding Active Pill */}
+                      {isSelected && (
+                        <motion.div
+                          layoutId="activeCategoryPill"
+                          transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                          className="absolute inset-0 rounded-full bg-[#203a2e] shadow-sm -z-0"
+                        />
+                      )}
+
+                      <Icon
+                        size={15}
+                        className={`relative z-10 transition-colors ${
+                          isSelected
+                            ? "text-[#E07A5F]"
+                            : "text-[#6E675E] group-hover:text-[#C45D3E]"
+                        }`}
+                      />
+                      <span className="relative z-10">{cat.label}</span>
+                      <span
+                        className={`relative z-10 text-[10px] sm:text-[11px] font-mono font-bold px-1.5 py-0.5 rounded-md transition-colors ${
+                          isSelected
+                            ? "bg-[#335443] text-white"
+                            : "bg-[#F3EDE4] text-[#6E675E] group-hover:bg-[#E8E0D4]"
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </motion.button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Quick Status Bar with Instant Reset and Scroll Controls */}
-            <div className="w-full flex flex-wrap items-center justify-between gap-3 text-xs text-[#6E675E] font-medium min-h-[36px] px-2 sm:px-4 mt-2">
-              <div className="flex items-center gap-2">
-                <span>
-                  Showing <strong>{filteredProducts.length}</strong> of {products.length} creations
-                  {selectedCategory !== "all" && (
-                    <> in <em className="text-[#203a2e] font-semibold">{categories.find((c) => c.id === selectedCategory)?.label}</em></>
-                  )}
-                </span>
+            {/* Quick Status Bar with Instant Reset */}
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-[#6E675E] font-medium min-h-[22px] text-center px-4">
+              <span>
+                Showing <strong>{filteredProducts.length}</strong> of {products.length} creations
                 {selectedCategory !== "all" && (
-                  <button
-                    type="button"
-                    onClick={() => handleCategorySelect("all")}
-                    className="inline-flex items-center gap-1 text-[#C45D3E] hover:text-[#A8472A] font-semibold underline underline-offset-2 ml-1 cursor-pointer active:scale-95 transition-transform"
-                  >
-                    <RotateCcw size={11} />
-                    <span>Show all</span>
-                  </button>
+                  <> in <em className="text-[#203a2e] font-semibold">{categories.find((c) => c.id === selectedCategory)?.label}</em></>
                 )}
-              </div>
-
-              {/* Scroll Arrow Navigation Buttons */}
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] text-[#8E877E] hidden sm:inline mr-1">
-                  Scroll gallery:
-                </span>
+              </span>
+              {selectedCategory !== "all" && (
                 <button
                   type="button"
-                  onClick={() => scroll("left")}
-                  className="w-9 h-9 rounded-full bg-white border border-[#D6CCBF] text-[#203a2e] hover:bg-[#203a2e] hover:text-white shadow-xs flex items-center justify-center transition-all duration-150 active:scale-90 cursor-pointer"
-                  aria-label="Scroll creations left"
-                  title="Scroll left"
+                  onClick={() => setSelectedCategory("all")}
+                  className="inline-flex items-center gap-1 text-[#C45D3E] hover:text-[#A8472A] font-semibold underline underline-offset-2 ml-1 cursor-pointer active:scale-95 transition-transform"
                 >
-                  <ChevronLeft size={18} />
+                  <RotateCcw size={11} />
+                  <span>Show all</span>
                 </button>
-                <button
-                  type="button"
-                  onClick={() => scroll("right")}
-                  className="w-9 h-9 rounded-full bg-white border border-[#D6CCBF] text-[#203a2e] hover:bg-[#203a2e] hover:text-white shadow-xs flex items-center justify-center transition-all duration-150 active:scale-90 cursor-pointer"
-                  aria-label="Scroll creations right"
-                  title="Scroll right"
-                >
-                  <ChevronRight size={18} />
-                </button>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Horizontally Scrollable Products Carousel Rail */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto pb-6 pt-3 px-1 scroll-smooth snap-x snap-mandatory custom-scrollbar"
+        {/* Fast Animated Responsive Products Grid */}
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10"
         >
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((prod) => (
               <motion.div
                 key={prod.id}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                exit={{ opacity: 0, scale: 0.96 }}
                 transition={{
-                  duration: 0.18,
+                  duration: 0.2,
                   ease: "easeOut",
                 }}
-                className="group w-[300px] sm:w-[350px] md:w-[380px] shrink-0 snap-start rounded-3xl bg-white overflow-hidden shadow-sm border border-[#E8E0D4] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between"
+                className="group rounded-3xl bg-white overflow-hidden shadow-sm border border-[#E8E0D4] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
                   {/* Image Container with Hover Zoom */}
@@ -369,19 +335,7 @@ export default function ProductShowcase() {
               </motion.div>
             ))}
           </AnimatePresence>
-        </div>
-
-        {/* Bottom Scroll Navigation Cue */}
-        <div className="mt-2 flex items-center justify-between px-2 text-xs text-[#6E675E]">
-          <div className="flex items-center gap-1.5">
-            <Sparkles size={13} className="text-[#C45D3E]" />
-            <span>Horizontal Gallery &bull; {filteredProducts.length} pieces available</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="hidden sm:inline">Swipe or use &larr; &rarr; buttons above to view more</span>
-            <span className="sm:hidden">&larr; Swipe left / right &rarr;</span>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

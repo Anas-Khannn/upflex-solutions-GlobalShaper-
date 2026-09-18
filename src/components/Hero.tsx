@@ -222,30 +222,12 @@ export default function Hero() {
 
                   <div className="absolute inset-0 bg-gradient-to-t from-[#203a2e]/95 via-[#203a2e]/20 to-black/30 pointer-events-none z-0" />
 
-                  {/* Top Bar: Badges & Minimal Slide Indicators (low z-1) */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-1 pointer-events-auto">
-                    <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide bg-white/95 text-[#203a2e] shadow-sm backdrop-blur-md flex items-center gap-1.5 pointer-events-none">
+                  {/* Top Bar: Badges (low z-1) */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-1 pointer-events-none">
+                    <span className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide bg-white/95 text-[#203a2e] shadow-sm backdrop-blur-md flex items-center gap-1.5">
                       <Sparkles size={12} className="text-[#C45D3E]" />
                       <span>Artisan Upcycling</span>
                     </span>
-
-                    {/* Sleek Minimal Slide Indicators */}
-                    <div className="flex items-center gap-1.5 bg-black/35 backdrop-blur-md px-2.5 py-1.5 rounded-full z-1">
-                      {heroCreations.map((creation, idx) => (
-                        <button
-                          key={creation.id}
-                          type="button"
-                          onClick={() => setActiveArtIndex(idx)}
-                          className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                            activeArtIndex === idx
-                              ? "w-6 bg-[#FAF7F2] shadow-xs"
-                              : "w-1.5 bg-[#FAF7F2]/40 hover:bg-[#FAF7F2]/75"
-                          }`}
-                          title={creation.title}
-                          aria-label={`Show ${creation.title}`}
-                        />
-                      ))}
-                    </div>
 
                     <AnimatePresence mode="wait">
                       <motion.span
@@ -254,7 +236,7 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 4 }}
                         transition={{ duration: 0.3 }}
-                        className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide bg-[#203a2e]/90 text-[#FAF7F2] shadow-sm backdrop-blur-md pointer-events-none"
+                        className="px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide bg-[#203a2e]/90 text-[#FAF7F2] shadow-sm backdrop-blur-md"
                       >
                         {currentArt.tag}
                       </motion.span>

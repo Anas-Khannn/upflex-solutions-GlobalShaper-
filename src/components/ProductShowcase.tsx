@@ -139,7 +139,7 @@ export default function ProductShowcase() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -171,87 +171,87 @@ export default function ProductShowcase() {
             No two pieces are ever identical. Every bag inherits the colors, typography, and history
             of reclaimed urban advertising banners.
           </motion.p>
+        </div>
 
-          {/* Category Filter Navigation - Guaranteed ONE Single Line with Smooth Layout Animation */}
-          <div className="mt-8 flex flex-col items-center gap-3 w-full">
-            <div className="max-w-full overflow-x-auto py-1 px-2 no-scrollbar">
-              <div
-                role="tablist"
-                aria-label="Filter products by category"
-                className="w-max p-1.5 rounded-full bg-[#E8E0D4]/70 border border-[#D6CCBF]/70 backdrop-blur-xs flex items-center gap-1.5 sm:gap-2 shadow-xs flex-nowrap whitespace-nowrap"
-              >
-                {categories.map((cat) => {
-                  const Icon = cat.icon;
-                  const isSelected = selectedCategory === cat.id;
-                  const count = categoryCounts[cat.id] || 0;
+        {/* Category Filter Navigation - Dedicated Max-W-5xl Single Line Container */}
+        <div className="w-full max-w-5xl mx-auto flex flex-col items-center gap-3 mb-10">
+          <div className="w-full flex justify-center overflow-x-auto py-1 px-2 no-scrollbar">
+            <div
+              role="tablist"
+              aria-label="Filter products by category"
+              className="inline-flex items-center gap-1 sm:gap-1.5 md:gap-2 p-1.5 rounded-full bg-[#E8E0D4]/80 border border-[#D6CCBF]/80 backdrop-blur-xs shadow-xs flex-nowrap shrink-0"
+            >
+              {categories.map((cat) => {
+                const Icon = cat.icon;
+                const isSelected = selectedCategory === cat.id;
+                const count = categoryCounts[cat.id] || 0;
 
-                  return (
-                    <motion.button
-                      key={cat.id}
-                      type="button"
-                      role="tab"
-                      aria-selected={isSelected}
-                      onClick={() => setSelectedCategory(cat.id)}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.96 }}
-                      className={`relative px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none flex items-center gap-2 whitespace-nowrap group shrink-0 ${
+                return (
+                  <motion.button
+                    key={cat.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.96 }}
+                    className={`relative px-3 sm:px-3.5 md:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none flex items-center gap-1.5 sm:gap-2 whitespace-nowrap group shrink-0 ${
+                      isSelected
+                        ? "text-white"
+                        : "bg-white/80 text-[#554E45] hover:bg-white hover:text-[#211E1B] border border-transparent hover:border-[#D6CCBF]"
+                    }`}
+                  >
+                    {/* Smooth Gliding Active Pill */}
+                    {isSelected && (
+                      <motion.div
+                        layoutId="activeCategoryPill"
+                        transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                        className="absolute inset-0 rounded-full bg-[#203a2e] shadow-sm -z-0"
+                      />
+                    )}
+
+                    <Icon
+                      size={15}
+                      className={`relative z-10 transition-colors ${
                         isSelected
-                          ? "text-white"
-                          : "bg-white/80 text-[#554E45] hover:bg-white hover:text-[#211E1B] border border-transparent hover:border-[#D6CCBF]"
+                          ? "text-[#E07A5F]"
+                          : "text-[#6E675E] group-hover:text-[#C45D3E]"
+                      }`}
+                    />
+                    <span className="relative z-10">{cat.label}</span>
+                    <span
+                      className={`relative z-10 text-[10px] sm:text-[11px] font-mono font-bold px-1.5 py-0.5 rounded-md transition-colors ${
+                        isSelected
+                          ? "bg-[#335443] text-white"
+                          : "bg-[#F3EDE4] text-[#6E675E] group-hover:bg-[#E8E0D4]"
                       }`}
                     >
-                      {/* Smooth Gliding Active Pill */}
-                      {isSelected && (
-                        <motion.div
-                          layoutId="activeCategoryPill"
-                          transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                          className="absolute inset-0 rounded-full bg-[#203a2e] shadow-sm -z-0"
-                        />
-                      )}
-
-                      <Icon
-                        size={15}
-                        className={`relative z-10 transition-colors ${
-                          isSelected
-                            ? "text-[#E07A5F]"
-                            : "text-[#6E675E] group-hover:text-[#C45D3E]"
-                        }`}
-                      />
-                      <span className="relative z-10">{cat.label}</span>
-                      <span
-                        className={`relative z-10 text-[10px] sm:text-[11px] font-mono font-bold px-1.5 py-0.5 rounded-md transition-colors ${
-                          isSelected
-                            ? "bg-[#335443] text-white"
-                            : "bg-[#F3EDE4] text-[#6E675E] group-hover:bg-[#E8E0D4]"
-                        }`}
-                      >
-                        {count}
-                      </span>
-                    </motion.button>
-                  );
-                })}
-              </div>
+                      {count}
+                    </span>
+                  </motion.button>
+                );
+              })}
             </div>
+          </div>
 
-            {/* Quick Status Bar with Instant Reset */}
-            <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-[#6E675E] font-medium min-h-[22px] text-center px-4">
-              <span>
-                Showing <strong>{filteredProducts.length}</strong> of {products.length} creations
-                {selectedCategory !== "all" && (
-                  <> in <em className="text-[#203a2e] font-semibold">{categories.find((c) => c.id === selectedCategory)?.label}</em></>
-                )}
-              </span>
+          {/* Quick Status Bar with Instant Reset */}
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-[#6E675E] font-medium min-h-[22px] text-center px-4">
+            <span>
+              Showing <strong>{filteredProducts.length}</strong> of {products.length} creations
               {selectedCategory !== "all" && (
-                <button
-                  type="button"
-                  onClick={() => setSelectedCategory("all")}
-                  className="inline-flex items-center gap-1 text-[#C45D3E] hover:text-[#A8472A] font-semibold underline underline-offset-2 ml-1 cursor-pointer active:scale-95 transition-transform"
-                >
-                  <RotateCcw size={11} />
-                  <span>Show all</span>
-                </button>
+                <> in <em className="text-[#203a2e] font-semibold">{categories.find((c) => c.id === selectedCategory)?.label}</em></>
               )}
-            </div>
+            </span>
+            {selectedCategory !== "all" && (
+              <button
+                type="button"
+                onClick={() => setSelectedCategory("all")}
+                className="inline-flex items-center gap-1 text-[#C45D3E] hover:text-[#A8472A] font-semibold underline underline-offset-2 ml-1 cursor-pointer active:scale-95 transition-transform"
+              >
+                <RotateCcw size={11} />
+                <span>Show all</span>
+              </button>
+            )}
           </div>
         </div>
 

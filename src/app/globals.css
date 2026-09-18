@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-serif), Georgia, serif;
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --color-forest: #203a2e;
+  --color-forest-dark: #172c23;
+  --color-moss: #2d503f;
+  --color-moss-light: #446f59;
+  --color-sage: #5b826f;
+  --color-sage-light: #e4ece7;
+  --color-sage-tint: #f0f5f2;
+
+  --color-terracotta: #c45d3e;
+  --color-terracotta-dark: #a8472a;
+  --color-clay: #d97757;
+  --color-clay-light: #f7ebe6;
+  --color-clay-tint: #fcf4f1;
+
+  --color-cream: #faf7f2;
+  --color-linen: #f3ede4;
+  --color-sand: #e8e0d4;
+  --color-tan: #d6ccbf;
+
+  --color-bark: #211e1b;
+  --color-charcoal: #36322d;
+  --color-muted: #6e675e;
+  --color-muted-light: #8e877e;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  background-color: #faf7f2;
+  color: #36322d;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Fast, instant touch feedback without 300ms mobile delay */
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background-color: #c45d3e;
+  color: #ffffff;
+}
+
+/* Subtle artisanal pattern overlay */
+.earth-texture {
+  background-image: radial-gradient(rgba(32, 58, 46, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Glassmorphic nav bar and cards with warm cream tint */
+.glass-nav {
+  background: rgba(250, 247, 242, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Custom smooth scrollbar for product showcase */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #E8E0D4;
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #C45D3E;
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #A8472A;
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #C45D3E #E8E0D4;
+}

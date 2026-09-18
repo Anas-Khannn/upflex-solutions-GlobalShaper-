@@ -10,11 +10,36 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (typeof window !== "undefined") {
+      // Force manual scroll restoration so browser refresh loads directly at home page top
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+
+      // Scroll directly to Home (top: 0) on load/refresh
+      window.scrollTo(0, 0);
+
+      // Clean hash on reload if it pointed to another section
+      if (window.location.hash && window.location.hash !== "#home") {
+        window.history.replaceState(null, "", window.location.pathname);
+        window.scrollTo(0, 0);
+      }
+
+      const handleBeforeUnload = () => {
+        window.scrollTo(0, 0);
+      };
+      window.addEventListener("beforeunload", handleBeforeUnload);
+
+      const handleScroll = () => {
+        setScrolled(window.scrollY > 20);
+      };
+      window.addEventListener("scroll", handleScroll);
+
+      return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
   }, []);
 
   const navLinks = [
@@ -28,6 +53,15 @@ export default function Navbar() {
     { name: "Get Involved", href: "#shapers" },
     { name: "Team", href: "#team" },
   ];
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (mobileMenuOpen) setMobileMenuOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
@@ -66,6 +100,7 @@ export default function Navbar() {
           <a
             href="#home"
             aria-label="UpFlex Solutions"
+            onClick={handleHomeClick}
             className="flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C45D3E] rounded-lg p-1"
           >
             <div className="relative h-12 w-14 sm:h-13 sm:w-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
@@ -85,6 +120,7 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={link.href === "#home" ? handleHomeClick : undefined}
                 className="px-3 py-1.5 rounded-full text-sm font-medium text-[#36322d] hover:text-[#C45D3E] hover:bg-[#F3EDE4] transition-all duration-150 active:scale-95 cursor-pointer select-none"
               >
                 {link.name}
@@ -130,7 +166,7 @@ export default function Navbar() {
                   <a
                     key={link.name}
                     href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={link.href === "#home" ? handleHomeClick : () => setMobileMenuOpen(false)}
                     className="px-4 py-2.5 rounded-xl text-base font-medium text-[#211e1b] hover:bg-[#F3EDE4] hover:text-[#C45D3E] transition-colors"
                   >
                     {link.name}

@@ -84,6 +84,21 @@ export default function RootLayout({
     <html lang="en" className={`${fraunces.variable} ${jakarta.variable} scroll-smooth`}>
       <head>
         <link rel="icon" href="/logo.png" type="image/png" sizes="any" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if ('scrollRestoration' in history) {
+                  history.scrollRestoration = 'manual';
+                }
+                window.scrollTo(0, 0);
+                if (window.location.hash && window.location.hash !== '#home') {
+                  history.replaceState(null, '', window.location.pathname);
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen flex flex-col bg-[#FAF7F2] text-[#36322D] antialiased selection:bg-[#c45d3e] selection:text-white">
         {children}

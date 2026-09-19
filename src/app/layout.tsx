@@ -91,10 +91,10 @@ export default function RootLayout({
                 if ('scrollRestoration' in history) {
                   history.scrollRestoration = 'manual';
                 }
-                window.scrollTo(0, 0);
-                if (window.location.hash && window.location.hash !== '#home') {
+                if (window.location.hash) {
                   history.replaceState(null, '', window.location.pathname);
                 }
+                window.scrollTo(0, 0);
               } catch (e) {}
             `,
           }}

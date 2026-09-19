@@ -17,14 +17,24 @@ export default function Navbar() {
         window.history.scrollRestoration = "manual";
       }
 
-      // Scroll directly to Home (top: 0) on load/refresh
-      window.scrollTo(0, 0);
+      const resetToHome = () => {
+        if (window.location.hash) {
+          window.history.replaceState(null, "", window.location.pathname);
+        }
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        setActiveSection("home");
+      };
 
-      // Clean hash on reload if it pointed to another section
-      if (window.location.hash && window.location.hash !== "#home") {
-        window.history.replaceState(null, "", window.location.pathname);
-        window.scrollTo(0, 0);
-      }
+      // Force top immediately on mount
+      resetToHome();
+
+      // Guard against browser late-hydration scroll restoration or layout shifts
+      const t1 = setTimeout(resetToHome, 50);
+      const t2 = setTimeout(resetToHome, 200);
+
+      window.addEventListener("load", resetToHome);
 
       const handleBeforeUnload = () => {
         window.scrollTo(0, 0);
@@ -46,19 +56,29 @@ export default function Navbar() {
           "home",
         ];
 
-        const scrollPosition = window.scrollY + 200;
+        const currentY =
+          window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+        const scrollPosition = currentY + 150;
+
         for (const sectionId of sections) {
           const el = document.getElementById(sectionId);
-          if (el && el.offsetTop <= scrollPosition) {
-            setActiveSection(sectionId);
-            break;
+          if (el) {
+            const elTop = el.getBoundingClientRect().top + currentY;
+            if (elTop <= scrollPosition) {
+              setActiveSection(sectionId);
+              break;
+            }
           }
         }
       };
+
       window.addEventListener("scroll", handleScroll, { passive: true });
       handleScroll();
 
       return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+        window.removeEventListener("load", resetToHome);
         window.removeEventListener("beforeunload", handleBeforeUnload);
         window.removeEventListener("scroll", handleScroll);
       };
@@ -77,14 +97,49 @@ export default function Navbar() {
     { name: "Team", href: "#team" },
   ];
 
-  const handleHomeClick = (e: React.MouseEvent) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    if (window.location.hash) {
-      window.history.replaceState(null, "", window.location.pathname);
+    setMobileMenuOpen(false);
+
+    if (href === "#home") {
+      if (window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveSection("home");
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 50);
+      return;
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setActiveSection("home");
-    if (mobileMenuOpen) setMobileMenuOpen(false);
+
+    const targetId = href.replace("#", "");
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      const executeScroll = () => {
+        const headerOffset = 84;
+        const currentScrollY =
+          window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const elementRect = targetElement.getBoundingClientRect();
+        const targetTop = elementRect.top + currentScrollY - headerOffset;
+
+        window.scrollTo({
+          top: Math.max(0, Math.round(targetTop)),
+          behavior: "smooth",
+        });
+      };
+
+      // Immediate scroll attempt
+      executeScroll();
+
+      // Second scroll attempt after mobile menu begins collapsing to guarantee WebKit/mobile execution
+      setTimeout(() => {
+        executeScroll();
+        setActiveSection(targetId);
+        window.history.replaceState(null, "", href);
+      }, 60);
+    }
   };
 
   return (
@@ -124,8 +179,8 @@ export default function Navbar() {
           <a
             href="#home"
             aria-label="UpFlex Solutions"
-            onClick={handleHomeClick}
-            className="flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C45D3E] rounded-lg p-1"
+            onClick={(e) => scrollToSection(e, "#home")}
+            className="flex items-center group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C45D3E] rounded-lg p-1 cursor-pointer"
           >
             <div className="relative h-12 w-14 sm:h-13 sm:w-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
               <Image
@@ -147,7 +202,7 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={link.href === "#home" ? handleHomeClick : undefined}
+                  onClick={(e) => scrollToSection(e, link.href)}
                   className={`relative px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none ${
                     isActive
                       ? "text-white"
@@ -171,6 +226,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <a
               href="#shapers"
+              onClick={(e) => scrollToSection(e, "#shapers")}
               className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold text-white bg-[#C45D3E] hover:bg-[#A8472A] shadow-sm hover:shadow transition-all duration-150 active:scale-95 cursor-pointer select-none"
             >
               <span>Join Us</span>
@@ -208,8 +264,8 @@ export default function Navbar() {
                     <a
                       key={link.name}
                       href={link.href}
-                      onClick={link.href === "#home" ? handleHomeClick : () => setMobileMenuOpen(false)}
-                      className={`px-4 py-2.5 rounded-xl text-sm sm:text-base font-medium transition-colors flex items-center justify-between ${
+                      onClick={(e) => scrollToSection(e, link.href)}
+                      className={`px-4 py-2.5 rounded-xl text-sm sm:text-base font-medium transition-colors flex items-center justify-between cursor-pointer active:scale-[0.98] ${
                         isActive
                           ? "bg-[#203a2e] text-white font-semibold shadow-xs"
                           : "text-[#211e1b] hover:bg-[#F3EDE4] hover:text-[#C45D3E]"
@@ -223,8 +279,8 @@ export default function Navbar() {
                 <div className="pt-2">
                   <a
                     href="#shapers"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-center font-semibold text-white bg-[#C45D3E] hover:bg-[#A8472A] transition-colors shadow"
+                    onClick={(e) => scrollToSection(e, "#shapers")}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-center font-semibold text-white bg-[#C45D3E] hover:bg-[#A8472A] transition-colors shadow cursor-pointer active:scale-95"
                   >
                     <span>We Need Shapers</span>
                     <ArrowUpRight size={16} />

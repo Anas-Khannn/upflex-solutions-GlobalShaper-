@@ -289,14 +289,17 @@ export default function Hero() {
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-6 -right-4 sm:-right-6 z-30 bg-[#FAF7F2] border border-[#D97757]/30 shadow-lg rounded-2xl p-4 flex items-center gap-3 pointer-events-auto"
+                className="absolute -top-4 -right-1 sm:-top-6 sm:-right-6 z-30 bg-[#FAF7F2]/95 backdrop-blur-md border border-[#D97757]/30 shadow-lg rounded-2xl p-3 sm:p-4 flex items-center gap-2.5 sm:gap-3 pointer-events-auto"
               >
-                <div className="w-11 h-11 rounded-xl bg-[#F7EBE6] text-[#C45D3E] flex items-center justify-center font-bold">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-[#F7EBE6] text-[#C45D3E] flex items-center justify-center font-bold text-base sm:text-lg shrink-0">
                   🌱
                 </div>
                 <div>
-                  <div className="text-xs font-medium text-[#6E675E]">Landfill Diversion</div>
-                  <div className="text-lg font-serif font-bold text-[#203a2e]">1,000+ kg Target</div>
+                  <div className="text-[10px] sm:text-xs font-medium text-[#6E675E] flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>Landfill Diversion</span>
+                  </div>
+                  <div className="text-sm sm:text-lg font-serif font-bold text-[#203a2e] whitespace-nowrap">1,000+ kg Target</div>
                 </div>
               </motion.div>
 
@@ -304,14 +307,14 @@ export default function Hero() {
               <motion.div
                 animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute -bottom-6 -left-4 sm:-left-6 z-30 bg-[#203a2e] text-white shadow-xl rounded-2xl p-4 flex items-center gap-3 border border-[#3A5B4A] pointer-events-auto"
+                className="absolute -bottom-4 -left-1 sm:-bottom-6 sm:-left-6 z-30 bg-[#203a2e]/95 backdrop-blur-md text-white shadow-xl rounded-2xl p-3 sm:p-4 flex items-center gap-2.5 sm:gap-3 border border-[#3A5B4A] pointer-events-auto"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#3A5B4A] text-[#E4ECE7] flex items-center justify-center">
-                  <HeartHandshake size={22} />
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#3A5B4A] text-[#E4ECE7] flex items-center justify-center shrink-0">
+                  <HeartHandshake size={18} className="sm:w-[22px] sm:h-[22px]" />
                 </div>
                 <div>
-                  <div className="text-xs text-[#E4ECE7]/80">Women Empowered</div>
-                  <div className="text-base font-serif font-bold">Dignified Green Income</div>
+                  <div className="text-[10px] sm:text-xs text-[#E4ECE7]/80">Women Empowered</div>
+                  <div className="text-xs sm:text-base font-serif font-bold whitespace-nowrap">Dignified Green Income</div>
                 </div>
               </motion.div>
             </motion.div>

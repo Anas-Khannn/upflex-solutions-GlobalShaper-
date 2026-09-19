@@ -8,6 +8,7 @@ import { Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,8 +33,30 @@ export default function Navbar() {
 
       const handleScroll = () => {
         setScrolled(window.scrollY > 20);
+
+        const sections = [
+          "team",
+          "shapers",
+          "products",
+          "impact",
+          "goals",
+          "activities",
+          "solution",
+          "problem",
+          "home",
+        ];
+
+        const scrollPosition = window.scrollY + 200;
+        for (const sectionId of sections) {
+          const el = document.getElementById(sectionId);
+          if (el && el.offsetTop <= scrollPosition) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
       };
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      handleScroll();
 
       return () => {
         window.removeEventListener("beforeunload", handleBeforeUnload);
@@ -60,6 +83,7 @@ export default function Navbar() {
       window.history.replaceState(null, "", window.location.pathname);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
+    setActiveSection("home");
     if (mobileMenuOpen) setMobileMenuOpen(false);
   };
 
@@ -115,17 +139,32 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center gap-1 xl:gap-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={link.href === "#home" ? handleHomeClick : undefined}
-                className="px-3 py-1.5 rounded-full text-sm font-medium text-[#36322d] hover:text-[#C45D3E] hover:bg-[#F3EDE4] transition-all duration-150 active:scale-95 cursor-pointer select-none"
-              >
-                {link.name}
-              </a>
-            ))}
+          <div className="hidden lg:flex items-center gap-1 xl:gap-1.5 bg-[#F3EDE4]/60 p-1 rounded-full border border-[#E8E0D4]/70">
+            {navLinks.map((link) => {
+              const sectionId = link.href.replace("#", "");
+              const isActive = activeSection === sectionId;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={link.href === "#home" ? handleHomeClick : undefined}
+                  className={`relative px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-colors duration-200 cursor-pointer select-none ${
+                    isActive
+                      ? "text-white"
+                      : "text-[#554E45] hover:text-[#211e1b] hover:bg-[#FAF7F2]"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavIndicator"
+                      transition={{ type: "spring", stiffness: 450, damping: 35 }}
+                      className="absolute inset-0 rounded-full bg-[#203a2e] -z-0 shadow-xs"
+                    />
+                  )}
+                  <span className="relative z-10">{link.name}</span>
+                </a>
+              );
+            })}
           </div>
 
           {/* Action CTA & Mobile Toggle */}
@@ -162,16 +201,25 @@ export default function Navbar() {
               className="lg:hidden border-t border-[#E8E0D4] bg-[#FAF7F2] px-4 pt-3 pb-6 shadow-xl"
             >
               <div className="flex flex-col gap-1.5">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    onClick={link.href === "#home" ? handleHomeClick : () => setMobileMenuOpen(false)}
-                    className="px-4 py-2.5 rounded-xl text-base font-medium text-[#211e1b] hover:bg-[#F3EDE4] hover:text-[#C45D3E] transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  const sectionId = link.href.replace("#", "");
+                  const isActive = activeSection === sectionId;
+                  return (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      onClick={link.href === "#home" ? handleHomeClick : () => setMobileMenuOpen(false)}
+                      className={`px-4 py-2.5 rounded-xl text-sm sm:text-base font-medium transition-colors flex items-center justify-between ${
+                        isActive
+                          ? "bg-[#203a2e] text-white font-semibold shadow-xs"
+                          : "text-[#211e1b] hover:bg-[#F3EDE4] hover:text-[#C45D3E]"
+                      }`}
+                    >
+                      <span>{link.name}</span>
+                      {isActive && <span className="w-2 h-2 rounded-full bg-[#E07A5F]" />}
+                    </a>
+                  );
+                })}
                 <div className="pt-2">
                   <a
                     href="#shapers"

@@ -3,8 +3,16 @@ import { Resend } from "resend";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { name, email, role, notes } = body;
+    let body;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON format in request payload." },
+        { status: 400 }
+      );
+    }
+    const { name, email, role, notes } = body || {};
 
     // Validate required inputs
     if (!name || typeof name !== "string" || !name.trim()) {

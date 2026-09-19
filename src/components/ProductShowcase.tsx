@@ -13,10 +13,32 @@ import {
   Package,
   Building2,
   RotateCcw,
+  X,
+  MessageCircle,
+  Eye,
 } from "lucide-react";
+
+export interface ProductItem {
+  id: string;
+  title: string;
+  category: string;
+  tag: string;
+  image: string;
+  alt: string;
+  material: string;
+  features: string;
+  artisanNote: string;
+}
 
 export default function ProductShowcase() {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+  const [likedProducts, setLikedProducts] = useState<Record<string, boolean>>({});
+
+  const toggleLike = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    setLikedProducts((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const products = useMemo(
     () => [
@@ -275,8 +297,11 @@ export default function ProductShowcase() {
                 className="group rounded-3xl bg-white overflow-hidden shadow-sm border border-[#E8E0D4] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
-                  {/* Image Container with Hover Zoom */}
-                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#E8E0D4]">
+                  {/* Image Container with Hover Zoom & Quick View */}
+                  <div
+                    onClick={() => setSelectedProduct(prod)}
+                    className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#E8E0D4] cursor-pointer"
+                  >
                     <Image
                       src={prod.image}
                       alt={prod.alt}
@@ -284,25 +309,44 @@ export default function ProductShowcase() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 text-[#203a2e] text-xs font-semibold shadow-md backdrop-blur-xs">
+                        <Eye size={13} className="text-[#C45D3E]" />
+                        <span>Quick View</span>
+                      </span>
+                    </div>
 
                     {/* Badge */}
-                    <div className="absolute top-4 left-4">
+                    <div className="absolute top-4 left-4 z-10 pointer-events-none">
                       <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/95 text-[#203a2e] shadow backdrop-blur-md shrink-0 whitespace-nowrap">
                         {prod.tag}
                       </span>
                     </div>
 
-                    <div className="absolute top-4 right-4">
-                      <span className="w-8 h-8 rounded-full bg-white/95 text-[#C45D3E] shadow backdrop-blur-md flex items-center justify-center">
-                        <Heart size={16} />
-                      </span>
-                    </div>
+                    {/* Like / Favorite Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => toggleLike(e, prod.id)}
+                      aria-label="Save this product to favorites"
+                      className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/95 shadow backdrop-blur-md flex items-center justify-center transition-all duration-200 hover:scale-110 active:scale-90 cursor-pointer"
+                    >
+                      <Heart
+                        size={16}
+                        className={`transition-colors duration-200 ${
+                          likedProducts[prod.id]
+                            ? "fill-[#C45D3E] text-[#C45D3E]"
+                            : "text-[#6E675E] hover:text-[#C45D3E]"
+                        }`}
+                      />
+                    </button>
                   </div>
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="font-serif text-xl font-bold text-[#211E1B] mb-2 group-hover:text-[#C45D3E] transition-colors">
+                    <h3
+                      onClick={() => setSelectedProduct(prod)}
+                      className="font-serif text-xl font-bold text-[#211E1B] mb-2 group-hover:text-[#C45D3E] transition-colors cursor-pointer"
+                    >
                       {prod.title}
                     </h3>
 
@@ -324,18 +368,129 @@ export default function ProductShowcase() {
 
                 {/* Card Bottom CTA */}
                 <div className="p-6 pt-0">
-                  <a
-                    href="#shapers"
+                  <button
+                    type="button"
+                    onClick={() => setSelectedProduct(prod)}
                     className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold bg-[#FAF7F2] text-[#203a2e] hover:bg-[#203a2e] hover:text-white border border-[#E8E0D4] transition-all duration-150 active:scale-95 shadow-none hover:shadow cursor-pointer"
                   >
-                    <span>Request Product / Corporate Order</span>
+                    <span>View Details &amp; Inquire</span>
                     <ExternalLink size={15} />
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* Product Quick View & Inquiry Modal */}
+        <AnimatePresence>
+          {selectedProduct && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedProduct(null)}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm -z-10"
+              />
+
+              {/* Modal Box */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-[#E8E0D4] overflow-hidden my-8 max-h-[85vh] flex flex-col"
+              >
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedProduct(null)}
+                  className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition-colors cursor-pointer active:scale-90"
+                  aria-label="Close dialog"
+                >
+                  <X size={18} />
+                </button>
+
+                {/* Modal Content */}
+                <div className="overflow-y-auto custom-scrollbar">
+                  {/* Image Preview Header */}
+                  <div className="relative h-64 sm:h-80 w-full bg-[#203a2e]">
+                    <Image
+                      src={selectedProduct.image}
+                      alt={selectedProduct.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 672px"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#C45D3E] text-white shadow mb-2">
+                        {selectedProduct.tag}
+                      </span>
+                      <h3 className="font-serif text-2xl sm:text-3xl font-bold leading-tight">
+                        {selectedProduct.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Details Body */}
+                  <div className="p-6 sm:p-8 space-y-5">
+                    {/* Material & Specs */}
+                    <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-[#203a2e] bg-[#E4ECE7] p-3 rounded-xl border border-[#5B826F]/20">
+                      <ShieldCheck size={18} className="text-[#3A5B4A] shrink-0" />
+                      <span>{selectedProduct.material}</span>
+                    </div>
+
+                    {/* Artisan Story */}
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#C45D3E] mb-1.5">
+                        Artisan Craftsmanship &amp; Heritage
+                      </h4>
+                      <p className="text-sm text-[#554E45] leading-relaxed">
+                        {selectedProduct.artisanNote}
+                      </p>
+                    </div>
+
+                    {/* Key Specifications */}
+                    <div className="bg-[#FAF7F2] rounded-2xl p-4 border border-[#E8E0D4]">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-[#203a2e] mb-1.5">
+                        Key Specifications
+                      </h4>
+                      <p className="text-xs sm:text-sm text-[#6E675E] leading-relaxed">
+                        {selectedProduct.features}
+                      </p>
+                    </div>
+
+                    {/* Order & Inquiry CTAs */}
+                    <div className="pt-3 flex flex-col sm:flex-row items-center gap-3">
+                      <a
+                        href={`https://wa.me/923459144444?text=${encodeURIComponent(
+                          `Hi UpflexSolutions! I would like to inquire about ordering '${selectedProduct.title}' (Made from: ${selectedProduct.material}).`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold bg-[#25D366] hover:bg-[#1EBE5B] text-white transition-all shadow hover:shadow-md active:scale-95 cursor-pointer"
+                      >
+                        <MessageCircle size={18} />
+                        <span>Inquire via WhatsApp</span>
+                      </a>
+
+                      <a
+                        href="#shapers"
+                        onClick={() => setSelectedProduct(null)}
+                        className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 py-3 px-5 rounded-xl text-sm font-semibold bg-[#203a2e] hover:bg-[#2D503F] text-white transition-all shadow hover:shadow-md active:scale-95 cursor-pointer"
+                      >
+                        <span>Corporate Bulk Order</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

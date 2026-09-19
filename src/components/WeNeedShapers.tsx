@@ -174,7 +174,7 @@ export default function WeNeedShapers() {
                   stiffness: 260,
                   damping: 20,
                 }}
-                className={`rounded-3xl bg-white p-7 shadow-sm border ${role.borderColor} flex flex-col justify-between hover:shadow-xl transition-shadow`}
+                className={`rounded-3xl bg-white p-6 sm:p-7 shadow-sm border ${role.borderColor} flex flex-col justify-between hover:shadow-xl transition-shadow`}
               >
                 <div>
                   <div
@@ -200,7 +200,7 @@ export default function WeNeedShapers() {
                     {role.skills.map((skill, sIdx) => (
                       <span
                         key={sIdx}
-                        className="text-[10px] font-semibold bg-[#FAF7F2] text-[#36322D] px-2 py-0.5 rounded-md border border-[#E8E0D4]"
+                        className="text-[10px] font-semibold bg-[#FAF7F2] text-[#36322D] px-2 py-0.5 rounded-md border border-[#E8E0D4] shrink-0 whitespace-nowrap"
                       >
                         {skill}
                       </span>

@@ -161,7 +161,7 @@ export default function ImpactSection() {
                   delay: index * 0.12,
                   ease: "easeOut",
                 }}
-                className={`rounded-3xl ${item.cardBg} p-8 shadow-sm border border-[#E8E0D4] hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between`}
+                className={`rounded-3xl ${item.cardBg} p-6 sm:p-8 shadow-sm border border-[#E8E0D4] hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between`}
               >
                 <div>
                   <div
@@ -184,7 +184,7 @@ export default function ImpactSection() {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-[#E8E0D4]/60 text-[11px] font-semibold text-[#6E675E] uppercase tracking-wider">
+                <div className="mt-6 pt-4 border-t border-[#E8E0D4]/60 text-[11px] font-semibold text-[#6E675E] uppercase tracking-wider shrink-0 whitespace-nowrap">
                   Verified Hub Metric
                 </div>
               </motion.div>

@@ -112,7 +112,7 @@ export default function HubActivities() {
                   delay: index * 0.12,
                   ease: "easeOut",
                 }}
-                className={`group rounded-3xl bg-white p-8 sm:p-10 shadow-sm border ${act.borderColor} hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between relative overflow-hidden`}
+                className={`group rounded-3xl bg-white p-6 sm:p-10 shadow-sm border ${act.borderColor} hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between relative overflow-hidden`}
               >
                 {/* Subtle Card Glow */}
                 <div
@@ -126,7 +126,7 @@ export default function HubActivities() {
                     >
                       <Icon size={28} />
                     </div>
-                    <span className={`text-xs font-bold px-3 py-1 rounded-full ${act.pillBg}`}>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full shrink-0 whitespace-nowrap ${act.pillBg}`}>
                       {act.stat}
                     </span>
                   </div>

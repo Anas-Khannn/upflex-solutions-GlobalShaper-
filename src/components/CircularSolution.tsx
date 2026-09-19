@@ -109,12 +109,12 @@ export default function CircularSolution() {
                   delay: index * 0.15,
                   ease: "easeOut",
                 }}
-                className="group relative rounded-3xl bg-white p-7 shadow-sm border border-[#E8E0D4] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
+                className="group relative rounded-3xl bg-white p-6 sm:p-7 shadow-sm border border-[#E8E0D4] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   {/* Top Row: Step Number & Icon */}
                   <div className="flex items-center justify-between mb-6">
-                    <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-[#FAF7F2] text-[#6E675E] border border-[#E8E0D4]">
+                    <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-full bg-[#FAF7F2] text-[#6E675E] border border-[#E8E0D4] shrink-0 whitespace-nowrap">
                       STEP {step.number}
                     </span>
                     <div
@@ -137,7 +137,7 @@ export default function CircularSolution() {
 
                 {/* Card Footer Badge */}
                 <div className="pt-4 border-t border-[#E8E0D4]/70 flex items-center justify-between text-xs">
-                  <span className="font-medium text-[#203a2e] bg-[#FAF7F2] px-2.5 py-1 rounded-md">
+                  <span className="font-medium text-[#203a2e] bg-[#FAF7F2] px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap">
                     {step.tag}
                   </span>
                   {index < steps.length - 1 && (

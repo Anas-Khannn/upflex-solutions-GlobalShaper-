@@ -100,7 +100,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E4ECE7] border border-[#5B826F]/30 text-[#203a2e] text-xs sm:text-sm font-semibold mb-6 shadow-sm"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E4ECE7] border border-[#5B826F]/30 text-[#203a2e] text-xs sm:text-sm font-semibold mb-6 shadow-sm self-center sm:self-start"
             >
               <Leaf size={14} className="text-[#3A5B4A]" />
               <span>Peshawar&apos;s Circular Economy Social Enterprise</span>
@@ -111,13 +111,13 @@ export default function Hero() {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="font-serif text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#211E1B] tracking-tight leading-[1.12] mb-6"
+              className="w-full font-serif text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#211E1B] tracking-tight leading-[1.12] mb-6 text-center sm:text-left"
             >
               {words.map((word, index) => (
                 <motion.span
                   key={index}
                   variants={wordVariants}
-                  className={`inline-block mr-2.5 sm:mr-3.5 ${
+                  className={`inline-block mr-2 sm:mr-3.5 ${
                     word === "Artisanal" || word === "Livelihoods"
                       ? "text-[#C45D3E] italic underline decoration-[#D97757]/40 decoration-wavy underline-offset-4"
                       : ""

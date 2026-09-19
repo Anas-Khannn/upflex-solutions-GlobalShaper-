@@ -284,9 +284,9 @@ export default function Footer() {
 
         {/* Bottom Section: Copyright & Developer Credit Strip */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#E4ECE7]/70">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-center md:text-left">
             <span>&copy; {new Date().getFullYear()} UpflexSolutions. All rights reserved.</span>
-            <span>•</span>
+            <span className="hidden sm:inline">•</span>
             <a
               href="https://www.linkedin.com/company/global-shapers-peshawar-hub/"
               target="_blank"
@@ -304,50 +304,52 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap items-center gap-2.5 bg-[#172c23]/95 border border-[#335443] hover:border-[#E07A5F] px-4 py-2 rounded-full shadow-lg transition-all duration-300 group"
+            className="w-full sm:w-auto flex flex-col sm:flex-row items-center justify-center gap-2.5 bg-[#172c23]/95 border border-[#335443] hover:border-[#E07A5F] px-4 py-3 sm:py-2 rounded-2xl sm:rounded-full shadow-lg transition-all duration-300 group"
           >
-            {/* Developer photo linking to GitHub */}
-            <a
-              href="https://github.com/Anas-Khannn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative shrink-0 hover:scale-105 transition-transform"
-              title="Anas Khan (Developer)"
-            >
-              <Avatar
-                name="Anas Khan"
-                photoUrl="/team/anas-khan.jpg"
-                imagePosition="object-[center_30%]"
-                size="sm"
-                className="border-2 border-[#E07A5F] shadow-sm"
-              />
-            </a>
-
-            <span className="text-[#E4ECE7]/85 font-medium tracking-wide text-xs">
-              Designed &amp; developed by{" "}
+            {/* Developer photo & name */}
+            <div className="flex flex-wrap items-center justify-center gap-2 text-center">
               <a
                 href="https://github.com/Anas-Khannn"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="View Anas Khan on GitHub"
-                className="inline-flex items-center gap-1.5 ml-1 px-3 py-1 rounded-full font-black text-white text-xs bg-gradient-to-r from-[#E07A5F] via-[#D97757] to-[#C45D3E] shadow-sm hover:brightness-110 hover:shadow-md hover:scale-105 transition-all duration-200 tracking-wider uppercase ring-1 ring-[#E07A5F]/60"
+                className="relative shrink-0 hover:scale-105 transition-transform"
+                title="Anas Khan (Developer)"
               >
-                <span>Anas Khan</span>
-                <GithubIcon size={12} className="opacity-90" />
+                <Avatar
+                  name="Anas Khan"
+                  photoUrl="/team/anas-khan.jpg"
+                  imagePosition="object-[center_30%]"
+                  size="sm"
+                  className="border-2 border-[#E07A5F] shadow-sm"
+                />
               </a>
-            </span>
+
+              <span className="text-[#E4ECE7]/85 font-medium tracking-wide text-xs">
+                Designed &amp; developed by{" "}
+                <a
+                  href="https://github.com/Anas-Khannn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="View Anas Khan on GitHub"
+                  className="inline-flex items-center gap-1.5 ml-1 px-3 py-1 rounded-full font-black text-white text-xs bg-gradient-to-r from-[#E07A5F] via-[#D97757] to-[#C45D3E] shadow-sm hover:brightness-110 hover:shadow-md hover:scale-105 transition-all duration-200 tracking-wider uppercase ring-1 ring-[#E07A5F]/60"
+                >
+                  <span>Anas Khan</span>
+                  <GithubIcon size={12} className="opacity-90" />
+                </a>
+              </span>
+            </div>
 
             {/* Social Icons for Anas */}
-            <div className="flex items-center gap-1.5 pl-2 border-l border-[#335443]">
+            <div className="flex items-center justify-center gap-2 sm:gap-1.5 sm:pl-2.5 sm:border-l border-[#335443]">
               <a
                 href="https://github.com/Anas-Khannn"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Anas Khan GitHub"
                 title="GitHub: @Anas-Khannn"
-                className="w-6 h-6 rounded-full bg-[#203a2e] hover:bg-[#E07A5F] text-[#E4ECE7] hover:text-[#203a2e] flex items-center justify-center transition-colors"
+                className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-[#203a2e] hover:bg-[#E07A5F] text-[#E4ECE7] hover:text-[#203a2e] flex items-center justify-center transition-all duration-150 active:scale-95 shadow-xs"
               >
-                <GithubIcon size={12} />
+                <GithubIcon size={13} />
               </a>
               <a
                 href="https://www.linkedin.com/in/anas-khan-7014b536a?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
@@ -355,9 +357,9 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Anas Khan LinkedIn"
                 title="LinkedIn Profile"
-                className="w-6 h-6 rounded-full bg-[#203a2e] hover:bg-[#E07A5F] text-[#E4ECE7] hover:text-[#203a2e] flex items-center justify-center transition-colors"
+                className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-[#203a2e] hover:bg-[#E07A5F] text-[#E4ECE7] hover:text-[#203a2e] flex items-center justify-center transition-all duration-150 active:scale-95 shadow-xs"
               >
-                <LinkedinIcon size={12} />
+                <LinkedinIcon size={13} />
               </a>
               <a
                 href="https://www.instagram.com/thedevscript?stkn=eDhzNTVmNmV1OGx2&utm_source=qr"
@@ -365,9 +367,9 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Anas Khan Instagram (@thedevscript)"
                 title="Instagram: @thedevscript"
-                className="w-6 h-6 rounded-full bg-[#203a2e] hover:bg-[#E07A5F] text-[#E4ECE7] hover:text-[#203a2e] flex items-center justify-center transition-colors"
+                className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-[#203a2e] hover:bg-[#E07A5F] text-[#E4ECE7] hover:text-[#203a2e] flex items-center justify-center transition-all duration-150 active:scale-95 shadow-xs"
               >
-                <InstagramIcon size={12} />
+                <InstagramIcon size={13} />
               </a>
             </div>
           </motion.div>

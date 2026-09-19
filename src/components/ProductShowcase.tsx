@@ -288,7 +288,7 @@ export default function ProductShowcase() {
 
                     {/* Badge */}
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/95 text-[#203a2e] shadow backdrop-blur-md">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/95 text-[#203a2e] shadow backdrop-blur-md shrink-0 whitespace-nowrap">
                         {prod.tag}
                       </span>
                     </div>

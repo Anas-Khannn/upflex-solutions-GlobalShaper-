@@ -126,7 +126,7 @@ export default function TeamSection() {
                 delay: index * 0.12,
                 ease: "easeOut",
               }}
-              className="group rounded-3xl bg-white p-7 text-center shadow-sm border border-[#E8E0D4] hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-between"
+              className="group rounded-3xl bg-white p-6 sm:p-7 text-center shadow-sm border border-[#E8E0D4] hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-between"
             >
               <div className="w-full flex flex-col items-center">
                 {/* Circular Icon / Photo Avatar Component */}
@@ -181,7 +181,7 @@ export default function TeamSection() {
                 </h3>
 
                 {/* Role Pill Label */}
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#F7EBE6] text-[#C45D3E] border border-[#D97757]/20 mb-3">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-[#F7EBE6] text-[#C45D3E] border border-[#D97757]/20 mb-3 shrink-0 whitespace-nowrap">
                   {member.role}
                 </span>
 

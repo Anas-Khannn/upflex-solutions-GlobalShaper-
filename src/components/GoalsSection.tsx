@@ -89,23 +89,23 @@ export default function GoalsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="rounded-3xl bg-white p-8 sm:p-10 shadow-sm border border-[#E8E0D4] relative overflow-hidden"
+            className="rounded-3xl bg-white p-6 sm:p-10 shadow-sm border border-[#E8E0D4] relative overflow-hidden"
           >
-            <div className="flex items-center justify-between pb-6 mb-6 border-b border-[#E8E0D4]">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#F7EBE6] text-[#C45D3E] flex items-center justify-center font-bold">
-                  <Sparkles size={24} />
+            <div className="flex items-center justify-between gap-3 pb-6 mb-6 border-b border-[#E8E0D4]">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#F7EBE6] text-[#C45D3E] flex items-center justify-center font-bold shrink-0">
+                  <Sparkles size={22} className="sm:w-6 sm:h-6" />
                 </div>
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#C45D3E]">
+                <div className="min-w-0">
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#C45D3E] block truncate">
                     Phase 1 (Months 1 – 12)
                   </span>
-                  <h3 className="font-serif text-2xl font-bold text-[#211E1B]">
+                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#211E1B] truncate">
                     Short-Term Goals
                   </h3>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#F7EBE6] text-[#C45D3E]">
+              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#F7EBE6] text-[#C45D3E] shrink-0 whitespace-nowrap">
                 In Motion
               </span>
             </div>
@@ -128,9 +128,9 @@ export default function GoalsSection() {
               ))}
             </div>
 
-            <div className="mt-8 pt-6 border-t border-[#E8E0D4] bg-[#FAF7F2] -mx-8 -mb-8 sm:-mx-10 sm:-mb-10 p-6 flex items-center justify-between text-xs text-[#6E675E]">
+            <div className="mt-8 pt-6 border-t border-[#E8E0D4] bg-[#FAF7F2] -mx-6 -mb-6 sm:-mx-10 sm:-mb-10 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#6E675E]">
               <span>Pilot Target: Peshawar Metro Area</span>
-              <span className="font-semibold text-[#C45D3E]">High Community Focus</span>
+              <span className="font-semibold text-[#C45D3E] shrink-0 whitespace-nowrap">High Community Focus</span>
             </div>
           </motion.div>
 
@@ -140,23 +140,23 @@ export default function GoalsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-            className="rounded-3xl bg-[#203a2e] text-[#FAF7F2] p-8 sm:p-10 shadow-lg border border-[#335443] relative overflow-hidden"
+            className="rounded-3xl bg-[#203a2e] text-[#FAF7F2] p-6 sm:p-10 shadow-lg border border-[#335443] relative overflow-hidden"
           >
-            <div className="flex items-center justify-between pb-6 mb-6 border-b border-[#335443]">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-[#3A5B4A] text-[#E4ECE7] flex items-center justify-center font-bold">
-                  <Compass size={24} />
+            <div className="flex items-center justify-between gap-3 pb-6 mb-6 border-b border-[#335443]">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#3A5B4A] text-[#E4ECE7] flex items-center justify-center font-bold shrink-0">
+                  <Compass size={22} className="sm:w-6 sm:h-6" />
                 </div>
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#E07A5F]">
+                <div className="min-w-0">
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#E07A5F] block truncate">
                     Phase 2 &amp; Beyond
                   </span>
-                  <h3 className="font-serif text-2xl font-bold text-white">
+                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-white truncate">
                     Long-Term Vision
                   </h3>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#3A5B4A] text-[#E4ECE7]">
+              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#3A5B4A] text-[#E4ECE7] shrink-0 whitespace-nowrap">
                 Scale &amp; Policy
               </span>
             </div>
@@ -179,9 +179,9 @@ export default function GoalsSection() {
               ))}
             </div>
 
-            <div className="mt-8 pt-6 border-t border-[#335443] bg-[#172c23] -mx-8 -mb-8 sm:-mx-10 sm:-mb-10 p-6 flex items-center justify-between text-xs text-[#E4ECE7]/70">
+            <div className="mt-8 pt-6 border-t border-[#335443] bg-[#172c23] -mx-6 -mb-6 sm:-mx-10 sm:-mb-10 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#E4ECE7]/70">
               <span>National Vision: Sustainable Pakistan</span>
-              <span className="font-semibold text-[#E07A5F]">Empowerment &amp; Zero-Waste</span>
+              <span className="font-semibold text-[#E07A5F] shrink-0 whitespace-nowrap">Empowerment &amp; Zero-Waste</span>
             </div>
           </motion.div>
         </div>

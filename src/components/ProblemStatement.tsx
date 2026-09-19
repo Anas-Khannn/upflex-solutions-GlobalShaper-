@@ -59,7 +59,7 @@ export default function ProblemStatement() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="rounded-3xl bg-white p-8 sm:p-10 shadow-sm border border-[#E8E0D4] hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between"
+            className="rounded-3xl bg-white p-6 sm:p-10 shadow-sm border border-[#E8E0D4] hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#F7EBE6] rounded-bl-full -z-0" />
 
@@ -99,9 +99,9 @@ export default function ProblemStatement() {
               </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-[#E8E0D4]/60 flex items-center justify-between text-xs font-semibold text-[#C45D3E]">
-              <span>LANDFILL ACCUMULATION</span>
-              <span className="font-mono bg-[#F7EBE6] px-2.5 py-1 rounded-full">
+            <div className="mt-8 pt-4 border-t border-[#E8E0D4]/60 flex items-center justify-between gap-2 text-xs font-semibold text-[#C45D3E]">
+              <span className="truncate">LANDFILL ACCUMULATION</span>
+              <span className="font-mono bg-[#F7EBE6] px-2.5 py-1 rounded-full shrink-0 whitespace-nowrap">
                 High Priority Crisis
               </span>
             </div>
@@ -113,7 +113,7 @@ export default function ProblemStatement() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-            className="rounded-3xl bg-white p-8 sm:p-10 shadow-sm border border-[#E8E0D4] hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between"
+            className="rounded-3xl bg-white p-6 sm:p-10 shadow-sm border border-[#E8E0D4] hover:shadow-md transition-shadow relative overflow-hidden flex flex-col justify-between"
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#E4ECE7] rounded-bl-full -z-0" />
 
@@ -153,9 +153,9 @@ export default function ProblemStatement() {
               </div>
             </div>
 
-            <div className="mt-8 pt-4 border-t border-[#E8E0D4]/60 flex items-center justify-between text-xs font-semibold text-[#3A5B4A]">
-              <span>ECONOMIC EMPOWERMENT</span>
-              <span className="font-mono bg-[#E4ECE7] px-2.5 py-1 rounded-full text-[#203a2e]">
+            <div className="mt-8 pt-4 border-t border-[#E8E0D4]/60 flex items-center justify-between gap-2 text-xs font-semibold text-[#3A5B4A]">
+              <span className="truncate">ECONOMIC EMPOWERMENT</span>
+              <span className="font-mono bg-[#E4ECE7] px-2.5 py-1 rounded-full text-[#203a2e] shrink-0 whitespace-nowrap">
                 Untapped Potential
               </span>
             </div>
